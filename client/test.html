@@ -1,0 +1,42 @@
+<html>
+<head><title>websocket client</title></head>
+<body>
+<p>websocket test client</p>
+<input id="message" type="text" />
+<input type="button" value="入力" onClick="send()" />
+<hr />
+<div id="log"></div>
+<script type="text/javascript">
+// WebSocketオブジェクトの生成
+var ws;
+ws = new WebSocket("ws://sub0000528514.hmk-temp.com:8890/chat");
+
+//受信処理
+ws.onmessage = function(event){
+  output(event.data);
+}
+
+//接続成功
+ws.onopen = function(event){
+  output("接続成功");
+}
+
+//切断
+ws.onclose = function(event){
+  output("切断");
+}
+
+//テキストボックスの値をWebSocketサーバに送信
+function send(){
+  var str = document.querySelector("#message");
+  ws.send(str.value);
+  str.value="";
+}
+
+//受信メッセージをログエリアに表示
+function output(str) {
+  document.getElementById("log").innerHTML += str + "<hr />";
+}
+</script>
+</body>
+</html>
