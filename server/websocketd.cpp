@@ -767,7 +767,7 @@ int encodeSendData(unsigned char *frame, const int opcode, const char *payload, 
 		 */
 		for(i=0;i<8;i++){ 
 			if(i>3){frameHeader[9-i] = 0x00;} //32bit以上は今回は無視(int型だから) 
-			frameHeader[9-i] = (payload_data_len&(0xff<<(i+8)))>>(i*8);
+			frameHeader[9-i] = (payload_data_len&(0xff<<(i*8)))>>(i*8);
 		}
 	}
 	else if(payload_data_len > 125) //データ長が125を超える場合は16bitで表現
@@ -785,7 +785,7 @@ int encodeSendData(unsigned char *frame, const int opcode, const char *payload, 
 		 * %x0000-FFFF
 		 */
 		for(i=0;i<2;i++){ 
-			frameHeader[3-i] = (payload_data_len&(0xff<<(i+8)))>>(i*8);
+			frameHeader[3-i] = (payload_data_len&(0xff<<(i*8)))>>(i*8);
 		}
 	}
 	else //データ長が125以下の場合は拡張領域使わない
